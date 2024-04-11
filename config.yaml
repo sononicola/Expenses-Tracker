@@ -1,0 +1,43 @@
+categories:
+  Alimentari:
+    - Frutta e Verdura
+    - Pane e Cereali
+    - Carne e Pesce
+  Abbigliamento:
+    - Camicie
+    - Pantaloni
+    - Scarpe
+  Uscite:
+    - Cinema
+    - Concerti
+    - Musei
+    - Aperitivi
+  Trasporti:
+    - "\U0001F697 Benzina auto"
+    - "\U0001F682 Biglietti trebo"
+  Salute:
+    - "Medicinali"
+    - "Visite Mediche"
+  Bollette:
+    - "Luce"
+    - "Gas"
+    - "Acqua"
+    - "Rifiuti"
+  Abbonamenti:
+    - "\U0001F3CB Palestra" 
+    - "\U0001F4FA Netflix"
+accounts:
+    liquid:
+    - "\U0001F4B0 Contanti"
+    - "\U0001F4B3 Conto 1"
+    - "\U0001F4B3 Conto 2"
+    - "\U0001F4B3 PayPal"
+    Remunerati:
+    - boh
+income_categories:
+  Stipendio:
+    - "Lavoro 1"
+    - "Lavoro 2"
+  Rapina:
+    - "Banca"
+    - "Ufficio postale"

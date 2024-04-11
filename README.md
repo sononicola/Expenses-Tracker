@@ -1,0 +1,1 @@
+A beatiful expenses tracker made with Streamlit and sqlite

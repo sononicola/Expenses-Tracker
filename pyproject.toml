@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "expenses_tracker"
+version = "0.1.0"
+description = ""
+authors = ["Nicola Meoli <46779155+sononicola@users.noreply.github.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+PyYAML = "^6.0.1"
+streamlit = "^1.33.0"
+pandas = "^2.2.2"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
