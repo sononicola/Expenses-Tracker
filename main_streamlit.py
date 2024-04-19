@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import expenses_tracker.database as database
+import sqlite3
 
 import yaml
 
@@ -61,22 +62,17 @@ def main():
             )
 
             if submit_button:
-                    conn,
-                    date,
-                    amount,
-                    category,
-                    sub_category,
-                    comment,
-                    expense_type,
-                    account_name,
+                database.insert_expense(
+                conn,
+                date,
+                amount,
+                category,
+                sub_category,
+                comment,
+                expense_type,
+                account_name,
                 )
                 st.success("Expense added successfully!")
-
-
-
-
-
-                    database.insert_expense(
     
 
     df = database.get_dataframe(conn)
