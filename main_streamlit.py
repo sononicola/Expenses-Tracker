@@ -1,5 +1,4 @@
 import streamlit as st
-import sqlite3
 import pandas as pd
 import expenses_tracker.database as database
 
@@ -38,44 +37,50 @@ def main():
     )
     expense_type = st.selectbox("Expense Type", ["Expense", "\U0001F4B2 Income"])
     with st.container(border=True):
-        if expense_type in ["Expense", "\U0001F4B2 Income"]:
-            if expense_type == "Expense":
-                category = st.selectbox(
-                    "Category", categories
-                )  # Deve stare fuori dal form altrimenti non si aggiornano le sub_categories
-                category_type = "categories"
-            elif expense_type == "\U0001F4B2 Income":
-                category = st.selectbox(
-                    "Category", income_categories
-                )  # Deve stare fuori dal form altrimenti non si aggiornano le sub_categories
-                category_type = "income_categories"
+        if expense_type == "Expense":
+            category = st.selectbox(
+                "Category", categories
+            )  # Deve stare fuori dal form altrimenti non si aggiornano le sub_categories
+            category_type = "categories"
+        elif expense_type == "\U0001F4B2 Income":
+            category = st.selectbox(
+                "Category", income_categories
+            )  # Deve stare fuori dal form altrimenti non si aggiornano le sub_categories
+            category_type = "income_categories"
 
-            sub_categories = list(data[category_type][category])
-            with st.form(key="expense_form", border=False):
-                sub_category = st.selectbox("Subcategory", sub_categories)
-                date = st.date_input("Date")
-                amount = st.number_input("Amount", value=0.0, step=0.01)
-                comment = st.text_area("Comment")
-                account_name = st.selectbox("Account Name", accounts_liquid)
+        sub_categories = list(data[category_type][category])
+        with st.form(key="expense_form", border=False):
+            sub_category = st.selectbox("Subcategory", sub_categories)
+            date = st.date_input("Date", format="DD/MM/YYYY")
+            amount = st.number_input("Amount", value=0.0, step=0.01)
+            comment = st.text_area("Comment")
+            account_name = st.selectbox("Account Name", accounts_liquid)
 
-                submit_button = st.form_submit_button(
-                    label="Add Expense", type="primary"
+            submit_button = st.form_submit_button(
+                label="Add Expense", type="primary"
+            )
+
+            if submit_button:
+                    conn,
+                    date,
+                    amount,
+                    category,
+                    sub_category,
+                    comment,
+                    expense_type,
+                    account_name,
                 )
+                st.success("Expense added successfully!")
 
-                if submit_button:
+
+
+
+
                     database.insert_expense(
-                        conn,
-                        date,
-                        amount,
-                        category,
-                        sub_category,
-                        comment,
-                        expense_type,
-                        account_name,
-                    )
-                    st.success("Expense added successfully!")
+    
 
     df = database.get_dataframe(conn)
+    st.session_state["df"] = df
     COLUMN_CONFIG = {
         "id": None,
         "date": st.column_config.DateColumn("Data", format="DD/MM/YYYY"),
@@ -86,19 +91,22 @@ def main():
         "type": None,
         "amount": st.column_config.NumberColumn("Importo", format="%.2f"),
     }
+    st.header("Ultimi 10 pagamenti aggiunti")
     st.dataframe(
-        df, use_container_width=True, hide_index=True, column_config=COLUMN_CONFIG
+        df.tail(10), use_container_width=True, hide_index=True, column_config=COLUMN_CONFIG
     )
+    st.header("Ultimi 10 pagamenti aggiunti")
     df_expenses = df.loc[(df["type"] == "Expense")]
     st.dataframe(
-        df_expenses,
+        df_expenses.tail(10),
         use_container_width=True,
         hide_index=True,
         column_config=COLUMN_CONFIG,
     )
+    st.header("Ultimi 10 d aggiunti")
     df_income = df.loc[(df["type"] == "\U0001F4B2 Income")]
     st.dataframe(
-        df_income,
+        df_income.tail(10),
         use_container_width=True,
         hide_index=True,
         column_config=COLUMN_CONFIG,
